@@ -1,17 +1,17 @@
-# Ansible Role: Apache Solr
-
+Ansible Role: Apache Solr
+=========================
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-solr.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-solr)
 
 Installs [Apache Solr](http://lucene.apache.org/solr/) on Linux servers.
 
-## Requirements
-
-Java must be available on the server. You can easily install Java using the `geerlingguy.java` role. Make sure the Java version installed meets the minimum requirements of Solr (e.g. Java 8 for Solr 6+).
+Requirements
+------------
+Java must be available on the server. You can easily install Java using the `nycrecords.java` role. Make sure the Java version installed meets the minimum requirements of Solr (e.g. Java 8 for Solr 6+).
 
 This role is currently tested and working with Solr 3.x, 4.x, 5.x, 6.x, 7.x, and 8.x.
 
-## Role Variables
-
+Role Variables
+--------------
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     solr_workspace: /root
@@ -76,7 +76,7 @@ The hostname or IP address on which Solr will be reachable. `localhost` should w
 
 Whether the `restart solr` handler should be used or not. If you're building containers or AMIs, you might need to disable the restart handler for a provisioning run.
 
-### Variables used only for Solr < 5.
+### Variables used only for Solr < 5
 
 The following variables are currently only applied to installations of Solr 4 and below:
 
@@ -88,21 +88,21 @@ Path where Solr log file will be created.
 
 The hostname or IP address to which Solr will bind. Defaults to `0.0.0.0` which allows Solr to listen on all interfaces.
 
-## Dependencies
-
+Dependencies
+------------
 None.
 
-## Example Playbook
-
+Example Playbook
+------------
     - hosts: solr-servers
       roles:
         - geerlingguy.java
         - geerlingguy.solr
 
-## License
-
+License
+------------
 MIT / BSD
 
-## Author Information
-
+Author Information
+------------
 This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

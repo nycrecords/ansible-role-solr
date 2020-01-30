@@ -1,50 +1,26 @@
----
 language: python
-services: docker
-
+python:
+- 3.7
 env:
   global:
-    - ROLE_NAME: solr
-  matrix:
-    - MOLECULE_DISTRO: centos7
-    - MOLECULE_DISTRO: ubuntu1804
-    - MOLECULE_DISTRO: debian10
-
-    # Solr 7.
-    - MOLECULE_DISTRO: centos7
-      MOLECULE_PLAYBOOK: playbook-solr-7.yml
-    - MOLECULE_DISTRO: debian10
-      MOLECULE_PLAYBOOK: playbook-solr-7.yml
-
-    # Solr 6.
-    - MOLECULE_DISTRO: ubuntu1604
-      MOLECULE_PLAYBOOK: playbook-solr-6.yml
-
-    # Solr 5.
-    - MOLECULE_DISTRO: ubuntu1604
-      MOLECULE_PLAYBOOK: playbook-solr-5.yml
-
-    # Solr 4.
-    - MOLECULE_DISTRO: ubuntu1604
-      MOLECULE_PLAYBOOK: playbook-solr-4.yml
-
-    # Solr 3.
-    - MOLECULE_DISTRO: ubuntu1604
-      MOLECULE_PLAYBOOK: playbook-solr-3.yml
-
+  - MOLECULE_DEBUG: 'true'
+  - ROLE_NAME: solr
+  - EC2_REGION: us-east-1
+  - secure: epI+rCim+XUDzyRT+DyzJBCaLGUOQBxhHxBhcljq45Zbfv4z4kIlLiPK1VIbW+o88gH/EUHrie+rz6wpy3v5OlDV+0eVqtO1SDkHLc6JHORr2XtujsvKybI/3IgG+/aoBNodxfcoHT/bjlcmGtLihtOACyW4oGYbD7U3TQfvkSrpRrerdCDicozWDlWZN3cn7+kmaydr2cBahOler83wR5YMYQp1c0y1QLU8KJdtLDN2myW/Mf/CNs4/1fsfI0YLYYbu98rYirnaa32ud/AFzlnJlagc3pnWYpzP53bibaNBGKN5n6Vk9L1L25OPXuD5oBSqR4SIpC3nvCs5TNIOBCrqDxqiDHq0xgE7ihM0ZC68vJUyFCQoNgD5yRC4f8VtOPhwdLn7nGJU7u65lOoIaHYpLc8cT7+/eleHJG8HrRk0wJGobxohga6Q1A3Amcf7oLemX7gXPhdqBorKeNl4rbOTYK+zVZTH+B+Mzq077ZoYrIJ4a1AeV++860oT+SBp5fbkSgAjfKqK9uabmGDNpcd2/sqFyywkZwI7Vl+OkASaVZKbTxUbGY72oDlFls2o++6MnqIbTVbrE+VujSaTVFijF/uTXhDJ96CsjKFjzqepvHo2fEFlGvBvfXUGStR8PZ0LfPJMisUMzHLeQ2nP7I+GOJvK+8ecjm5sEA7gBbc=
+  - secure: Cgkc0SFBfjqB1t5X8JTEUGd0O3DSgL0uQV6kJ2yGjx0WwDX2DvMwjtj0E9myhhfsDDyDuSU8qvXb6N76+DYFdjxH0o/FnOSlYxyP0JVeFk6vhp7U0oca8vIm0DcmuPc0f+2zC4rx//7OaIy+bRdzBCnbUrfjnjTyOK0WEjIZqmBTlTBBNAc7e9PG86+VhO0FhaDd2ARDcSyKTSLLFt0KV9BdirytINbw2YVfPizbQxT4T+AeoHMwJuLrUPO6/HmyP3J5ZRHBSTzrRw0+oMfH7ZGYwrl6/x9ah+J+/glwF3T7My+6t58FVbZ11D/Lv01i4JR2JkxEiDc0EAGJ8lnLjiyHebxAOnI2uRukDMmBc5LdDNJK7M7RbFSLiihp+6nlC6l+Q04W//gXyHuqzVjToxd8xH+451rMKGhRkl66lPCxiQKoWUKiXyMYnGwtfGwDWJBGuzP4Tzpdp0vMYZrgDOedvJ/Fro+MpsZGXC6uC2PMk+miFM9s+p3eBkcZhUwdFBxf64UYNHZtGzpqCgQDbDSBDbz3P5ny1TvX7wOH2cTxTKNy8zyLZ6t5SaMwCzFhM2rAvrfbeEfx4Nnf1RawPUENtQcir+bFw2MgEVVIJpM691FwrYRnelpyjevr6N3EZ5M7n0yeUz7b9+SxnChRPCY15WW2PKmigZAKUOZLXyA=
+  - secure: oxr2bln0LAUdNLKZg8iUKr6Qwvc032TIof0EC7eBq+ccpGYBDV6pGprTbVbxZMDgO0d+S0XhpaDTDwlggbXcMavmwzwFR6zS/ypM70/tTehkOVgpGGcSATl1p7192SjIwaQD66ZLI446eI1gU8e/ydmCB9rl53EXJviZ0w+1LwYqKHHmiMBFBAY0NtAMN60mEtromZfaerxS26uRN2trsYydP4Qo2dTNbd2+MgATG88jxzxIn1h81MXL7JPHMn4QYzgVzb0PcAE3cGOyrN+n6SczH69spXn1LgvkpNYdnh9/YEnS8eqCHCAk+I979fBzq7goGKA8UbGWtreao2jSkoUh6oRGVSLU5PVNOCE7r16PPYVSNT8vV800YrgCzAFSLepBy4iNRgEUW/yrAccEhrpWr14GHimfoaZfiODErRx3jDaf7zhR7/E25rGuSHa6CxobTTqeK6ZLejQ2NLKQVN8+fvHj4iddimgUbm3V1h/EbCm4SLIG/0egibh2EdOdQq6NGK1MKITis2RsZAXHTbxcr5hYcZs0s7VItbA1+iAoI9M0n6Bfe9YTkjR7FWvoRI7W95EudpWTXGrKQQRnSGR1E+UT6upldT2hhz8IjaLQIRtSLca2QcXU6kprluAlPxUrUJhU4CzbpHQg+wpaWksyKlHK7r33bDcLiKXaaP0=
+  - secure: a/umbNohualg+Lej1NRTknVo4Jtw/S+506fRPz4/DPbyGZOCU76ClQfhm5gPxEkNdx7ZrEPZ6bN0jPSXZgP3zlVQqGuKQli4NQ0zr7XgBVeDAVKxI9vxb2cxAjULaxdsEoMcrgHjIiYYffpyN7mvpC977lkp8ye2PgWpTO0stbgvrUYQcBGY0b2qDQJ0P2i6/WAVF024cFo2uvBNPiedzi0KHITsB1epiMxozSvChBxo20FRpWTnqu/RsXBH2Um0In+wJHsTIPSYwh1ZENUHSxchyLRVxCUb+oTV3sl4+ApSUTZQjyG3dEGi8D8CnKAShRt+6Dn3hhELEoTibLYlYbWUBTbVLi5U2NNNoFIS6k6zZjtgJ7WBJvqXCkNs2MZfyHHU2B0DSRXHAUIkJa6h35Pl/47wDl5cyp2Sl5vdGsCsgx5dkrZRfUWLEevyekZmLuNdYNAx0/kd0avXwtY2PTm7RObKkB9WbEAZD3wcefrrKDFY2j+w0btJJrTlTvqZ64tUMqO5tBzuLkNQqhfw2NuUC0d0cPxAM31cJA24IxLP8rPThtT6CnZ1mDnJ/yXwTrHD1aS2xBtexyVN2kfVQmnB/2pzj0FtgcdK2Ci965DCiRIcFhRMG9OaqCOI2uUrM8ITbhP9ifLDfCMGm9SiWFDzaicx2xdjLan+jRHqvyw=
 install:
-  # Install test dependencies.
-  - pip install molecule docker
-
-before_script:
-  # Use actual Ansible Galaxy role name for the project directory.
-  - cd ../
-  - mv ansible-role-$ROLE_NAME geerlingguy.$ROLE_NAME
-  - cd geerlingguy.$ROLE_NAME
-
+- pip install pipenv
+- pipenv install
+- aws configure set aws_access_key_id $AWS_ACCESS_KEY
+- aws configure set aws_secret_access_key $AWS_SECRET_KEY
+- aws configure set default.region $EC2_REGION
+- aws configure list
 script:
-  # Run tests.
-  - molecule test
-
+- molecule create --scenario-name aws
+- molecule converge --scenario-name aws
+- molecule verify --scenario-name aws
+- molecule destroy --scenario-name aws
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

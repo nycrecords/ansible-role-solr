@@ -18,7 +18,7 @@
     solr_remove_cruft: true
     solr_xms: "128M"
     solr_xmx: "128M"
-    solr_timezone: "EST"
+    solr_timezone: "GMT-5"
 
   roles:
     - role: nycrecords.rhsm

@@ -68,6 +68,14 @@ Default timezone of JVM running solr. You can override this if needed when using
 
 A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the default example configuration that ships with Solr. Note that this variable only applies when using Solr 5+.
 
+    solr_cores:
+      - collection1:
+          git_repo:
+          sparse_checkout:
+            -
+
+You can also configure the cores from a Git repository by providing the `git_repo` URL and `sparse_checkout` folders (if applicable).
+
     solr_connect_host: localhost
 
 The hostname or IP address on which Solr will be reachable. `localhost` should work in most circumstances, but there are special cases where you may only be able to access the local Solr instance via another IP or hostname.

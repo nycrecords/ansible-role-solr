@@ -6,26 +6,78 @@
   register: solr_cores_current
   check_mode: false
 
+- debug:
+    msg: "{{ item.name }}"
+  with_items: "{{ solr_cores }}"
+
 - name: Ensure Solr conf directories exist.
   file:
-    path: "{{ solr_home }}/data/{{ item }}/conf"
+    path: "{{ solr_home }}/data/{{ item.name }}/conf"
     state: directory
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     recurse: true
-  when: "item not in solr_cores_current.content"
+  when: "item.name not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
 
 - name: Ensure core configuration directories exist.
-  command: "cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item }}/"
-  when: "item not in solr_cores_current.content"
+  file:
+    path: "{{ solr_home }}/data/{{ item.name }}/"
+    state: directory
+    mode: '0755'
+  when: "item.name not in solr_cores_current.content and item.git_repo"
+  with_items: "{{ solr_cores }}"
+  become: true
+  become_user: "{{ solr_user }}"
+
+- name: Ensure core configuration directories exist.
+  command: "cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item.name }}/"
+  when: "item.name not in solr_cores_current.content and not item.git_repo"
+  with_items: "{{ solr_cores }}"
+  become: true
+  become_user: "{{ solr_user }}"
+
+- name: Install Git
+  package:
+    name: git
+    state: present
+  when: solr_core_config_git
+
+- name: Prepare sparse Git Repository
+  shell: |
+    git init
+    git config core.sparsecheckout true
+    git remote add origin {{ item.git_repo }}
+  args:
+    chdir: "{{ solr_home }}/data/{{ item.name }}/conf"
+    creates: "{{ solr_home }}/data/{{ item.name }}/conf/.git"
+  when: "item.name not in solr_cores_current.content and item.git_repo"
+  with_items: "{{ solr_cores }}"
+  become: true
+  become_user: "{{ solr_user }}"
+
+- name: Configure sparse-checkout
+  copy:
+    dest: "{{ solr_home }}/data/{{ item.name }}/conf/.git/info/sparse-checkout"
+    content: '{{ item.sparse_checkout | join("\n") }}'
+  when: "item.name not in solr_cores_current.content and item.git_repo and item.sparse_checkout"
+  with_items: "{{ solr_cores }}"
+  become: true
+  become_user: "{{ solr_user }}"
+
+- name: Clone Code
+  shell: git pull origin master
+  args:
+    chdir: "{{ solr_home }}/data/{{ item.name }}/conf"
+    creates: "{{ solr_home }}/data/{{ item.name }}/conf/{{ item.sparse_checkout | first }}"
+  when: "item.name not in solr_cores_current.content and item.git_repo and item.sparse_checkout"
   with_items: "{{ solr_cores }}"
   become: true
   become_user: "{{ solr_user }}"
 
 - name: Create configured cores.
-  command: "{{ solr_install_path }}/bin/solr create -c {{ item }} -p {{ solr_port }}"
-  when: "item not in solr_cores_current.content"
+  command: "{{ solr_install_path }}/bin/solr create -c {{ item.name }} -p {{ solr_port }}"
+  when: "item.name not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
   become: true
   become_user: "{{ solr_user }}"

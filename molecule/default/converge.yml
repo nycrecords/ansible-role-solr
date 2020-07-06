@@ -22,7 +22,18 @@
     solr_remove_cruft: true
     solr_xms: "128M"
     solr_xmx: "128M"
-    solr_timezone: "EST"
+    solr_timezone: "GMT-5"
+
+    solr_core_config_git: true
+    solr_cores:
+      - name: hyrax
+        git_repo: https://github.com/nycrecords/gpp-hyrax.git
+        sparse_checkout:
+          - solr/config
+      - name: test
+        git_repo: https://github.com/nycrecords/gpp-hyrax.git
+        sparse_checkout:
+          - solr/config
 
   roles:
     - role: nycrecords.rhsm

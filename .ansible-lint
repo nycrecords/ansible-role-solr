@@ -1,0 +1,13 @@
+exclude_paths:
+ - ./.travis.yml
+ - ./molecule/
+ - ./ansible/roles/nycrecords.*
+rulesdir:
+  - ~/ansible-lint-rules/rules/
+skip_list:
+  - '403'
+  - '204'
+  - '303' # TODO: Use Git module for sparse checkout
+  - '305' # TODO: Use Git module instead of shell
+use_default_rules: true
+verbosity: 1

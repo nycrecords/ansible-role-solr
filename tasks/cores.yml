@@ -20,7 +20,7 @@
   when: "item.name not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
 
-- name: Ensure core configuration directories exist.
+- name: Ensure core configuration directories exist (Create Blank Dir)
   file:
     path: "{{ solr_home }}/data/{{ item.name }}/"
     state: directory
@@ -30,7 +30,7 @@
   become: true
   become_user: "{{ solr_user }}"
 
-- name: Ensure core configuration directories exist.
+- name: Ensure core configuration directories exist (Use Example Config).
   command: "cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item.name }}/"
   when: "item.name not in solr_cores_current.content and not item.git_repo"
   with_items: "{{ solr_cores }}"

@@ -1,0 +1,6 @@
+---
+- name: SELinux - Allow mmap su
+  seboolean:
+    name: domain_can_mmap_files
+    state: yes
+    persistent: yes

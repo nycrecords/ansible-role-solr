@@ -38,4 +38,3 @@
     - ansible_distribution_version.split(".")[0] != '6'
     - solr_install_script_result.changed
   tags: ['skip_ansible_lint']
-ss

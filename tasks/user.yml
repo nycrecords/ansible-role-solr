@@ -5,7 +5,8 @@
 - name: Ensure solr_user exists.
   user:
     name: "{{ solr_user }}"
-    shell: /sbin/nologin
+    password: "{{  solr_user_password }}"
+    shell: "{{ solr_user_shell}}"
     state: present
     group: "{{ solr_user }}"
     comment: "SOLR Service User"
